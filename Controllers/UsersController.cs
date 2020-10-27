@@ -12,23 +12,58 @@ namespace CRUDtoFIle.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        UserRepository repo;
+        IUserRepo repo;
 
-        public UsersController(UserRepository repo)
+        public UsersController(IUserRepo repo)
         {
             this.repo = repo;
-            if (!repo.users.Any())
-            {
-                repo.users.Add(new User { Email = "tom26@gmail.com", Name = "Tom", Age = 26 });
-                repo.users.Add(new User { Email = "alice31@gmail.com", Name = "Alice", Age = 31 });
-            }
         }
 
+
+        // GET api/users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> Get()
+        public ActionResult<IEnumerable<User>> Get()
         {            
-            return repo.users.ToList();
+            return repo.getAll();
         }
 
+        // GET api/users/[email]
+        [HttpGet("{email}")]
+        public ActionResult<User> Get(string email)
+        {
+            User user = repo.get(email);
+            if (user == null)
+                return NotFound();
+            return Ok(user);
+        }
+
+        // PUT api/users
+        [HttpPut]
+        public ActionResult<User> Put(User user)
+        {
+            if (user == null)
+            {
+                return BadRequest();
+            }
+            if (repo.get(user.Email).Equals(null)) 
+            {
+                return NotFound();
+            }
+            repo.update(user.Email, user);
+            return Ok(user);
+        }
+
+        // DELETE apu/users/[email]
+        [HttpDelete("{email}")]
+        public ActionResult<User> Delete(string email)
+        {
+            User user = repo.get(email);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            repo.delete(email);
+            return Ok(user);
+        }
     }
 }

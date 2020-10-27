@@ -6,41 +6,74 @@ using System.Threading.Tasks;
 
 namespace CRUDtoFIle.Models
 {
-    public class UserRepository
+    public class UserRepository : IUserRepo
     {
-        public List<User> users { get; set; }
+        public List<User> Users { get; set; }
+
         public UserRepository()
         {
-            users = new List<User>();
+            Users = new List<User>();
+            User user = new User();
+            user.Id = 1; user.Email = "an@gmail.com"; user.Name = "Ann"; user.Age = 37;
+            Users.Add(user);
         }
 
-        public void add(User user) 
+        public UserRepository(List<User> users)
         {
-            users.Add(user);
+            this.Users = users;
         }
 
-        public void update(User user) 
+        public void add(User user)
         {
-            
+            Users.Add(user);
         }
 
-        public User get(string email) {
+        public void update(string email, User user)
+        {
+            int index = -1;
+            foreach (User u in Users)
+            {
+                if (u.Email.Equals(email))
+                {
+                    index = Users.IndexOf(u);
+                    break;
+                }
+            }
+            if (index != -1)
+            {
+                Users[index] = user;
+            }
+        }
+
+        public User get(string email)
+        {
+            foreach (User u in Users)
+            {
+                if (u.Email.Equals(email))
+                {
+                    return u;
+                }
+            }
             return null;
         }
 
         public List<User> getAll()
         {
-            return users;
+            return Users;
         }
-
-        public void delete(string email) 
+        public void delete(string email)
         {
-            for (int i = 0; i < users.Count; i++)
+            User found = null;
+            foreach (User u in Users)
             {
-                if (users[i].Email.Equals(email))
+                if (u.Email.Equals(email))
                 {
-                    users.RemoveAt(i);
+                    found = u;
                 }
+            }
+            if (found != null)
+            {
+                Users.Remove(found);
             }
         }
 
