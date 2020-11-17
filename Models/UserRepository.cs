@@ -25,12 +25,16 @@ namespace CRUDtoFIle.Models
 
         public void add(User user)
         {
-            Users.Add(user);
+            if (!Users.Contains(user))
+            {
+                Users.Add(user);
+            }
         }
 
-        public void update(string email, User user)
+        public void update(User user)
         {
             int index = -1;
+            string email = user.Email;
             foreach (User u in Users)
             {
                 if (u.Email.Equals(email))

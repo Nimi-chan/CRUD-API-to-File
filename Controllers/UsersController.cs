@@ -22,7 +22,7 @@ namespace CRUDtoFIle.Controllers
 
         // GET api/users
         [HttpGet]
-        public ActionResult<IEnumerable<User>> Get()
+        public async Task<ActionResult<IEnumerable<User>>> Get()
         {            
             return repo.getAll();
         }
@@ -49,11 +49,11 @@ namespace CRUDtoFIle.Controllers
             {
                 return NotFound();
             }
-            repo.update(user.Email, user);
+            repo.update(user);
             return Ok(user);
         }
 
-        // DELETE apu/users/[email]
+        // DELETE api/users/[email]
         [HttpDelete("{email}")]
         public ActionResult<User> Delete(string email)
         {
@@ -63,6 +63,17 @@ namespace CRUDtoFIle.Controllers
                 return NotFound();
             }
             repo.delete(email);
+            return Ok(user);
+        }
+
+        [HttpPost]
+        public ActionResult<User> Post(User user)
+        {
+            if (user == null)
+            {
+                return BadRequest();
+            }
+            repo.update(user);
             return Ok(user);
         }
     }
