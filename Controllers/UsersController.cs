@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CRUDAPI_Main.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using CRUDtoFIle.Models;
 
 namespace CRUDtoFIle.Controllers
 {
@@ -24,14 +24,14 @@ namespace CRUDtoFIle.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> Get()
         {            
-            return repo.getAll();
+            return await repo.getAll();
         }
 
         // GET api/users/[email]
         [HttpGet("{email}")]
-        public ActionResult<User> Get(string email)
+        public async Task<ActionResult<User>> Get(string email)
         {
-            User user = repo.get(email);
+            User user = await repo.get(email);
             if (user == null)
                 return NotFound();
             return Ok(user);
@@ -55,9 +55,9 @@ namespace CRUDtoFIle.Controllers
 
         // DELETE api/users/[email]
         [HttpDelete("{email}")]
-        public ActionResult<User> Delete(string email)
+        public async Task<ActionResult<User>> Delete(string email)
         {
-            User user = repo.get(email);
+            User user = await repo.get(email);
             if (user == null)
             {
                 return NotFound();

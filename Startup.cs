@@ -1,15 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using CRUDAPI_Main.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using CRUDtoFIle.Models;
 
-namespace CRUDtoFIle
+namespace CRUDAPI_Main
 {
     public class Startup
     {
@@ -17,7 +12,7 @@ namespace CRUDtoFIle
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IUserRepo, UserRepository>();
+            services.AddTransient<IUserRepo, UserRepoFile>();
 
             services.AddControllers();
         }

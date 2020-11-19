@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace CRUDtoFIle
+namespace CRUDAPI_Main
 {
     public class Program
     {

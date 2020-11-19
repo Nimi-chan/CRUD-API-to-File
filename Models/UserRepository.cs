@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CRUDtoFIle.Models
+namespace CRUDAPI_Main.Models
 {
-    public class UserRepository : IUserRepo
+    public class UserRepository
     {
         public List<User> Users { get; set; }
 
@@ -46,6 +46,9 @@ namespace CRUDtoFIle.Models
             if (index != -1)
             {
                 Users[index] = user;
+            } else
+            {
+                Users.Add(user);
             }
         }
 
